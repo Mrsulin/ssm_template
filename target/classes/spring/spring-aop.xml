@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+    <aop:config>
+        <aop:pointcut id="adb_t1" expression="execution(* club.sulinxx.method.Tg.t1(..))"/>
+        <aop:pointcut id="ada_t2" expression="execution(void *..t2())"/>
+        <aop:pointcut id="adaround_t3" expression="execution( void club.sulinxx.method.Tg.t3())"/>
+        <aop:pointcut id="adafReturn" expression="execution(* *..t5())"/>
+        <aop:pointcut id="adafThrowing" expression="execution(* *..t4())"/>
+
+        <!-- <aop:aspect ref="advice">
+             <aop:before method="Advice_before" pointcut-ref="adb_t1"/>
+             <aop:after method="Advice_after" pointcut-ref="ada_t2"/>
+             <aop:around method="Advice_around" pointcut-ref="adaround_t3"/>
+             <aop:after-throwing method="Advice_afterThrowing" pointcut-ref="adafThrowing"/>
+             <aop:after-returning method="Advice_afterReturn" pointcut-ref="adafReturn"/>
+         </aop:aspect>-->
+        <aop:aspect ref="advice">
+            <aop:before method="Advice_before" pointcut-ref="adb_t1"/>
+            <aop:after method="Advice_after" pointcut-ref="adb_t1"/>
+            <aop:around method="Advice_around" pointcut-ref="adb_t1"/>
+            <aop:after-returning method="Advice_afterReturn" pointcut-ref="adb_t1"/>
+            <aop:after-throwing method="Advice_afterThrowing" pointcut-ref="adb_t1"/>
+        </aop:aspect>
+
+        <aop:aspect ref="advice">
+            <aop:around method="Advice_around" pointcut="execution(* *..t3(..))"/>
+        </aop:aspect>
+    </aop:config>
+    <bean id="target" class="club.sulinxx.method.Tg"></bean>
+    <bean id="advice" class="club.sulinxx.advice.MyAdvice"></bean>
+</beans>
